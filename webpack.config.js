@@ -1,24 +1,26 @@
-var webpack = require('webpack');
-var path = require('path');
-
-var BUILD_DIR = path.resolve(__dirname, 'src/client/public');
-var APP_DIR = path.resolve(__dirname, 'src/client/app');
-
-var config = {
-    entry: APP_DIR + '/index.jsx',
-    output: {
-        path: BUILD_DIR,
-        filename: 'bundle.js'
-    },
-    module : {
-        loaders : [
-            {
-                test : /\.jsx?/,
-                include : APP_DIR,
-                loader : 'babel-loader'
-            }
-        ]
-    }
+module.exports = {
+  entry: [
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
+    './src/index.js'
+  ],
+  module: {
+    loaders: [{
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      loader: 'react-hot-loader!babel-loader'
+    }]
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
+  output: {
+    path: __dirname + '/dist',
+    publicPath: '/',
+    filename: 'bundle.js'
+  },
+  devServer: {
+    contentBase: './dist',
+    hot: true
+  }
 };
-
-module.exports = config;
